@@ -1,0 +1,4 @@
+# Register the standalone Matcha Dark Sea browser theme.
+- insert:
+    - id: ui-theme-matcha-dark-sea
+      name: '@zhangzujian/dsh-theme-matcha-dark-sea'

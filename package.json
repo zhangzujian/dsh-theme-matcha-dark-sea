@@ -1,0 +1,61 @@
+{
+  "name": "@zhangzujian/dsh-theme-matcha-dark-sea",
+  "version": "0.1.0",
+  "description": "A standalone Matcha Dark Sea theme plugin for DeepSeek Harness Web",
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.mjs",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "npm run build && npm test && npm pack --dry-run"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "theme",
+    "matcha-dark-sea"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangzujian/dsh-theme-matcha-dark-sea.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zhangzujian/dsh-theme-matcha-dark-sea/issues"
+  },
+  "homepage": "https://github.com/zhangzujian/dsh-theme-matcha-dark-sea#readme",
+  "engines": {
+    "node": ">=24"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}
