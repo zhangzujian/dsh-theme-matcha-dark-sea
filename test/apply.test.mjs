@@ -225,6 +225,10 @@ test('apply does not rewrite browser-normalized Lucide markup after its own muta
   assert.equal(svg.layerWrites, 1)
 })
 
+test('settings plugin icon uses the Lucide plug glyph', () => {
+  assert.equal(DSH_ICON_REPLACEMENTS['75b8640d'], 'plug')
+})
+
 test('registry covers the full DSH rc.6 icon set with Lucide markup', () => {
   const replacements = Object.values(DSH_ICON_REPLACEMENTS)
   assert.equal(Object.keys(DSH_ICON_REPLACEMENTS).length, 69)
