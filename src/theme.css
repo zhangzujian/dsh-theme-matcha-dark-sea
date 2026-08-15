@@ -226,3 +226,15 @@ body[data-dsh-matcha-dark-sea]::-webkit-scrollbar-thumb {
 body[data-dsh-matcha-dark-sea]::-webkit-scrollbar-thumb:hover {
   background: #64796f;
 }
+
+body[data-dsh-matcha-dark-sea] svg[data-dsh-lucide-icon] {
+  shape-rendering: geometricPrecision;
+}
+
+body[data-dsh-matcha-dark-sea] svg[data-dsh-lucide-icon] > :not([data-dsh-lucide-layer]) {
+  display: none;
+}
+
+body[data-dsh-matcha-dark-sea] svg[data-dsh-lucide-icon] > [data-dsh-lucide-layer] {
+  display: initial;
+}

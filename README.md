@@ -18,6 +18,12 @@ The DSH semantic token mapping keeps the original btop theme anchors:
 
 The plugin is intentionally dark-only. It records the existing DSH dark-mode marker, enables dark mode while mounted, and restores the previous state when unloaded.
 
+## Lucide icons
+
+The plugin also replaces the complete DSH `0.1.0-rc.6` application icon set with Lucide glyphs. It fingerprints only the official DSH SVG path data, so unrelated SVGs from messages or third-party plugins are not modified.
+
+A `MutationObserver` applies the mapping to icons rendered after startup. The adapter preserves each original SVG and restores it exactly when the plugin unloads. Selected Lucide 1.31.0 SVG data and license notices are included in the package.
+
 ## Install
 
 From GitHub:
@@ -36,7 +42,7 @@ A DSH restart is required for a changed profile bundle list to take effect.
 
 ## Development
 
-The project uses only Node.js for its deterministic build and tests. `scripts/build.mjs` embeds the scoped CSS and the Cordis `apply()` entry into the DSH browser module-loader artifact.
+The project uses only Node.js for its deterministic build and tests. `scripts/build.mjs` embeds the scoped CSS, Lucide registry, DOM adapter, and Cordis `apply()` entry into the DSH browser module-loader artifact.
 
 ```sh
 npm run build
