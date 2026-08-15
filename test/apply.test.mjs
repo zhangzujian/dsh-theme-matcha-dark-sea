@@ -89,14 +89,47 @@ class FakeBody extends FakeElement {
 }
 
 class FakeObserver {
+  static instances = []
+
   constructor(callback) {
     this.callback = callback
+    FakeObserver.instances.push(this)
   }
 
   observe() {}
 
+  emit(mutations) {
+    this.callback(mutations)
+  }
+
   disconnect() {
     this.disconnected = true
+  }
+}
+
+class BrowserNormalizedSvg extends FakeSvg {
+  layerWrites = 0
+
+  insertAdjacentHTML(_position, html) {
+    const match = html.match(/^<g data-dsh-lucide-layer="([^"]+)">([\s\S]*)<\/g>$/)
+    assert.ok(match)
+    const svg = this
+    const normalize = value => value.replace(/<([a-z][\w-]*)([^>]*) \/>/g, '<$1$2></$1>')
+    let innerHTML = normalize(match[2])
+    this.layerWrites += 1
+    this.layer = {
+      dataset: { dshLucideLayer: match[1] },
+      get innerHTML() {
+        return innerHTML
+      },
+      set innerHTML(value) {
+        svg.layerWrites += 1
+        innerHTML = normalize(value)
+      },
+      remove() {
+        svg.layer = undefined
+      },
+    }
   }
 }
 
@@ -115,6 +148,7 @@ function mount(body) {
 test.afterEach(() => {
   delete globalThis.document
   delete globalThis.MutationObserver
+  FakeObserver.instances.length = 0
 })
 
 test('apply enables the theme and replaces a DSH icon with Lucide', () => {
@@ -178,6 +212,17 @@ test('replacement is idempotent and exact restoration is reusable', () => {
   restoreSvg(svg, snapshots.get(svg))
   assert.equal(svg.dataset.dshLucideIcon, undefined)
   assert.match(svg.innerHTML, /M13\.3277/)
+})
+
+test('apply does not rewrite browser-normalized Lucide markup after its own mutation', () => {
+  const svg = new BrowserNormalizedSvg()
+  const body = new FakeBody([svg])
+  mount(body)
+  const observer = FakeObserver.instances.at(-1)
+
+  assert.equal(svg.layerWrites, 1)
+  observer.emit([{ target: svg, addedNodes: [], removedNodes: [] }])
+  assert.equal(svg.layerWrites, 1)
 })
 
 test('registry covers the full DSH rc.6 icon set with Lucide markup', () => {

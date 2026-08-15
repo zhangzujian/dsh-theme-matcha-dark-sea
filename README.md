@@ -24,6 +24,8 @@ The plugin also replaces the complete DSH `0.1.0-rc.6` application icon set with
 
 A `MutationObserver` applies the mapping to icons rendered after startup. The adapter preserves each original SVG and restores it exactly when the plugin unloads. Selected Lucide 1.31.0 SVG data and license notices are included in the package.
 
+The observer recognizes its own Lucide layers by stable DOM markers and root attributes. It does not compare serialized SVG markup, which browsers normalize differently and which must never turn an observer callback into a rewrite loop.
+
 ## Install
 
 From GitHub:

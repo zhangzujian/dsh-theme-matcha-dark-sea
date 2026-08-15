@@ -76,8 +76,13 @@ function replaceSvg(svg, snapshots) {
 
   let layer = lucideLayer(svg)
   const unchanged = svg.dataset.dshLucideIcon === icon
-    && layer?.innerHTML === markup
+    && layer?.dataset.dshLucideLayer === icon
     && svg.getAttribute('viewBox') === '0 0 24 24'
+    && svg.getAttribute('fill') === 'none'
+    && svg.getAttribute('stroke') === 'currentColor'
+    && svg.getAttribute('stroke-width') === '1.8'
+    && svg.getAttribute('stroke-linecap') === 'round'
+    && svg.getAttribute('stroke-linejoin') === 'round'
   if (unchanged) return false
 
   if (!layer) layer = appendLucideLayer(svg, icon, markup)
