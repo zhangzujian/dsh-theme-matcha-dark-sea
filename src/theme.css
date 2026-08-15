@@ -227,6 +227,16 @@ body[data-dsh-matcha-dark-sea]::-webkit-scrollbar-thumb:hover {
   background: #64796f;
 }
 
+/* Keep context-meter system and remaining portions distinct from the menu surface. */
+body[data-dsh-matcha-dark-sea] .JObwrW_colorSystem {
+  --meter-tint: #e6db74;
+}
+
+body[data-dsh-matcha-dark-sea] .JObwrW_bar {
+  background: #82958b;
+  box-shadow: inset 0 0 0 1px rgba(248, 248, 242, 0.22);
+}
+
 body[data-dsh-matcha-dark-sea] svg[data-dsh-lucide-icon] {
   shape-rendering: geometricPrecision;
 }

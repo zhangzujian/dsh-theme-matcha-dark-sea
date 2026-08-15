@@ -18,6 +18,8 @@ The DSH semantic token mapping keeps the original btop theme anchors:
 
 The plugin is intentionally dark-only. It records the existing DSH dark-mode marker, enables dark mode while mounted, and restores the previous state when unloaded.
 
+The context meter gives the system-prompt segment a yellow tint and the remaining-capacity track a lighter cool-neutral tint. Static tests require at least 4.5:1 and 3:1 contrast respectively against the meter panel surface.
+
 ## Lucide icons
 
 The plugin also replaces the complete DSH `0.1.0-rc.6` application icon set with Lucide glyphs. It fingerprints only the official DSH SVG path data, so unrelated SVGs from messages or third-party plugins are not modified.
