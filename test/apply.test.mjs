@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 import { apply, DARK_ATTRIBUTE, THEME_ATTRIBUTE } from '../src/apply.mjs'
 import { DSH_ICON_REPLACEMENTS, LUCIDE_ICON_MARKUP } from '../src/icon-registry.mjs'
-import { hashPath, replaceSvg, restoreSvg } from '../src/icons.mjs'
+import { hashPath, replaceSvg, resolveIcon, restoreSvg } from '../src/icons.mjs'
 
 const CHECKLIST_PATH = 'M13.3277 9.69629V10.976H7.28086V9.69629H13.3277Z'
 
@@ -225,8 +225,13 @@ test('apply does not rewrite browser-normalized Lucide markup after its own muta
   assert.equal(svg.layerWrites, 1)
 })
 
-test('settings plugin icon uses the Lucide plug glyph', () => {
-  assert.equal(DSH_ICON_REPLACEMENTS['75b8640d'], 'plug')
+test('personalization icon is contextual between settings plugins and view options', () => {
+  const button = (textContent) => ({ closest: () => ({ textContent }) })
+
+  assert.equal(DSH_ICON_REPLACEMENTS['75b8640d'], 'swatch-book')
+  assert.equal(resolveIcon('75b8640d', button('Plugins')), 'plug')
+  assert.equal(resolveIcon('75b8640d', button('插件')), 'plug')
+  assert.equal(resolveIcon('75b8640d', button('')), 'swatch-book')
 })
 
 test('registry covers the full DSH rc.6 icon set with Lucide markup', () => {

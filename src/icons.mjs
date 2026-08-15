@@ -9,6 +9,8 @@ const LUCIDE_ATTRIBUTES = [
   'stroke-linejoin',
 ]
 const LUCIDE_LAYER_SELECTOR = ':scope > g[data-dsh-lucide-layer]'
+const PERSONALIZATION_FINGERPRINT = '75b8640d'
+const PLUGIN_NAV_LABELS = new Set(['plugins', '插件'])
 
 export function hashPath(value) {
   let result = 0x811c9dc5
@@ -19,13 +21,21 @@ export function hashPath(value) {
   return (result >>> 0).toString(16).padStart(8, '0')
 }
 
+export function resolveIcon(fingerprint, svg) {
+  if (fingerprint === PERSONALIZATION_FINGERPRINT) {
+    const label = svg.closest?.('button')?.textContent?.trim().toLowerCase()
+    if (PLUGIN_NAV_LABELS.has(label)) return 'plug'
+  }
+  return DSH_ICON_REPLACEMENTS[fingerprint]
+}
+
 export function identifyIcon(svg) {
   const current = svg.dataset.dshLucideIcon
   if (current && LUCIDE_ICON_MARKUP[current]) return current
 
   const path = svg.querySelector('path[d]')
   const data = path?.getAttribute('d')
-  return data ? DSH_ICON_REPLACEMENTS[hashPath(data)] : undefined
+  return data ? resolveIcon(hashPath(data), svg) : undefined
 }
 
 function snapshotSvg(svg) {
